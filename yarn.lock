@@ -2532,6 +2532,14 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
+gcode-preview@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/gcode-preview/-/gcode-preview-2.0.2.tgz#32e1a6c8bc90dffa66877b5fba7e1ba395827610"
+  integrity sha512-hRxKXrNomDBi+PGFURUguY/46jBFarZYjQjCV97RR7IQR/VwcPBGNIYE1zOR08qdMHA1UsPHV2Frt3z8D1bbkg==
+  dependencies:
+    three "^0.110.0"
+    three-orbitcontrols "^2.110.1"
+
 get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
@@ -6082,6 +6090,16 @@ thread-loader@^2.1.3:
     loader-runner "^2.3.1"
     loader-utils "^1.1.0"
     neo-async "^2.6.0"
+
+three-orbitcontrols@^2.110.1:
+  version "2.110.1"
+  resolved "https://registry.yarnpkg.com/three-orbitcontrols/-/three-orbitcontrols-2.110.1.tgz#105fdad47c1de122e465950d61bae5f327674a29"
+  integrity sha512-z7Mg6dvg3a1IEdfeNuHRr29a+NMFnPzZ8jJ6VRMOKqgB3FUUj0Xzt+uiAWylgVpmoH33mJcFxzMTjqb3AJ5L/A==
+
+three@^0.110.0:
+  version "0.110.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.110.0.tgz#8719591de1336269113ee79f4268ba247b2324f8"
+  integrity sha512-wlurH8XBO9Sd5VIw8nBa+taLR20kqaI4e9FiuMh6tqK8eOS2q2R+ZoUyufbyDTVTHhs8GiTbv0r2CMLkwerFJg==
 
 through2@^2.0.0:
   version "2.0.5"

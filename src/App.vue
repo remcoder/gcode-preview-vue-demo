@@ -1,17 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>GCode Preview Vue Demo</h1>
+    <GCodePreview :gcode="file"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GCodePreview from './components/GCodePreview.vue';
 
 export default {
-  name: 'app',
   components: {
-    HelloWorld
+    GCodePreview
+  },
+
+  data() {
+    return {
+      file : ''
+    }
+  },
+
+  async mounted() {
+    const response = await fetch('/benchy.gcode');
+
+    if (response.status !== 200) {
+      throw new Error(`status code: ${response.status}`);
+    }
+
+    this.file = await response.text();
   }
 }
 </script>
