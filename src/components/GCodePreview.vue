@@ -1,9 +1,12 @@
 <template>
-  <div id="gcode-preview"></div>
+  <div>
+    <div id="gcode-preview"></div>
+    <div># layers: {{ layerCount }}</div>
+  </div>
 </template>
 
 <script>
-import { WebGLPreview } from 'gcode-preview/dist/gcode-preview';
+import { WebGLPreview } from 'gcode-preview';
 
 let preview;
 export default {
@@ -11,9 +14,16 @@ export default {
     gcode: String
   },
 
+  data() {
+    return {
+      layerCount: 0
+    }
+  },
+
   mounted() {
     preview = new WebGLPreview({
       targetId: 'gcode-preview',
+      limit: 200
     });
 
     window.addEventListener('resize', () => {
@@ -23,15 +33,15 @@ export default {
     preview.resize();
   },
 
-  watch : {
-    gcode: function() {
-      preview.processGCode(this.gcode);
-      preview.render();
+  methods: {
+    processGCode(gcode) {
+      preview.processGCode(gcode);
+      this.layerCount = preview.layers.length;
     }
   }
 }
 </script>
-<style scoped>
+<style>
   #gcode-preview {
     height: 400px;
   }

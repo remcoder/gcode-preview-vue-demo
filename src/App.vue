@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>GCode Preview Vue Demo</h1>
-    <GCodePreview :gcode="file"/>
+    <GCodePreview ref="preview" :gcode="file" />
   </div>
 </template>
 
@@ -27,6 +27,22 @@ export default {
     }
 
     this.file = await response.text();
+    const lines = this.file.split('\n');
+    const chunkSize = 5000;
+    let c = 0;
+    const preview = this.$refs.preview;
+
+    function loadProgressive() {
+      const start = c*chunkSize;
+      const end = (c+1)*chunkSize;
+      const chunk = lines.slice(start, end);
+      preview.processGCode(chunk)
+      c++;
+      if (c*chunkSize < lines.length) { 
+        setTimeout(loadProgressive, 50);
+      }
+    }
+    loadProgressive();
   }
 }
 </script>
