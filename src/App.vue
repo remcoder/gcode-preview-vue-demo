@@ -28,7 +28,7 @@ export default {
 
     this.file = await response.text();
     const lines = this.file.split('\n');
-    const chunkSize = 5000;
+    const chunkSize = 500;
     let c = 0;
     const preview = this.$refs.preview;
 
@@ -39,7 +39,7 @@ export default {
       preview.processGCode(chunk)
       c++;
       if (c*chunkSize < lines.length) { 
-        setTimeout(loadProgressive, 50);
+        setTimeout(loadProgressive, 500);
       }
     }
     loadProgressive();

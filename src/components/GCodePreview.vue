@@ -7,6 +7,7 @@
 
 <script>
 import { WebGLPreview } from 'gcode-preview';
+import * as THREE from 'three';
 
 let preview;
 export default {
@@ -21,9 +22,12 @@ export default {
   },
 
   mounted() {
+
     preview = new WebGLPreview({
       targetId: 'gcode-preview',
-      limit: 200
+      limit: Infinity,
+      topLayerColor: new THREE.Color('lime').getHex(),
+      lastSegmentColor: new THREE.Color('red').getHex()
     });
 
     window.addEventListener('resize', () => {

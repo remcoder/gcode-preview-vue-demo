@@ -2486,8 +2486,10 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
-"gcode-preview@file:../gcode-previewer":
-  version "2.1.0-alpha.0"
+gcode-preview@alpha:
+  version "2.1.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/gcode-preview/-/gcode-preview-2.1.0-alpha.2.tgz#ff5101f8404f343c92a53f28277240e9b076c2a9"
+  integrity sha512-/RGrtAvW0Aaf3hUTeHVnEaYOF4Sn+Vmdpmdgn73xCgiaZOsc4Q4E/u7ahlnXq4Bvz11SnjD3EANJU9FCZHlJDg==
   dependencies:
     three "^0.110.0"
     three-orbitcontrols "^2.110.1"
