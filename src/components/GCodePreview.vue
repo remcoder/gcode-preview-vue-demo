@@ -1,7 +1,6 @@
 <template>
   <div>
     <div id="gcode-preview"></div>
-    <div># layers: {{ layerCount }}</div>
   </div>
 </template>
 
@@ -12,7 +11,9 @@ import * as THREE from 'three';
 let preview;
 export default {
   props: {
-    gcode: String
+    topLayerColor: String,
+    lastSegmentColor: String,
+    upperLayerLimit: Number
   },
 
   data() {
@@ -25,9 +26,9 @@ export default {
 
     preview = new WebGLPreview({
       targetId: 'gcode-preview',
-      limit: Infinity,
-      topLayerColor: new THREE.Color('lime').getHex(),
-      lastSegmentColor: new THREE.Color('red').getHex()
+      limit: this.upperLayerLimit,
+      topLayerColor: new THREE.Color(this.topLayerColor).getHex(),
+      lastSegmentColor: new THREE.Color(this.lastSegmentColor).getHex()
     });
 
     window.addEventListener('resize', () => {

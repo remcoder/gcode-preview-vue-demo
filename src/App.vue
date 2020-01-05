@@ -1,13 +1,18 @@
 <template>
   <div id="app">
     <h1>GCode Preview Vue Demo</h1>
-    <GCodePreview ref="preview" :gcode="file" />
+    <GCodePreview ref="preview" 
+      :upperLayerLimit="Infinity"
+      :topLayerColor="'lime'"
+      :lastSegmentColor="'red'"
+    />
+    <div># layers loaded: {{ layersLoaded }}</div>
   </div>
 </template>
 
 <script>
 import GCodePreview from './components/GCodePreview.vue';
-
+let layersLoaded = 0;
 export default {
   components: {
     GCodePreview
@@ -15,7 +20,7 @@ export default {
 
   data() {
     return {
-      file : ''
+      layersLoaded : layersLoaded
     }
   },
 
@@ -29,14 +34,15 @@ export default {
     this.file = await response.text();
     const lines = this.file.split('\n');
     const chunkSize = 500;
-    let c = 0;
     const preview = this.$refs.preview;
 
-    function loadProgressive() {
+    let c = 0;
+    const loadProgressive = () => {
       const start = c*chunkSize;
       const end = (c+1)*chunkSize;
       const chunk = lines.slice(start, end);
       preview.processGCode(chunk)
+      this.layersLoaded = preview.layerCount;
       c++;
       if (c*chunkSize < lines.length) { 
         setTimeout(loadProgressive, 500);
