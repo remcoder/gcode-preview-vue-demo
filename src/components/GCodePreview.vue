@@ -5,6 +5,8 @@
 </template>
 
 <script>
+'use strict'
+
 import { WebGLPreview } from 'gcode-preview';
 import * as THREE from 'three';
 

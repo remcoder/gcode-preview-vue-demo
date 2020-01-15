@@ -45,9 +45,12 @@ export default {
       this.layersLoaded = preview.layerCount;
       c++;
       if (c*chunkSize < lines.length) { 
-        setTimeout(loadProgressive, 500);
+        window.__animationTimer__ = setTimeout(loadProgressive, 500);
       }
     }
+    // cancel loading process if one is still in progress
+    // mostly when hot reloading
+    window.clearTimeout(window.__animationTimer__);
     loadProgressive();
   }
 }
