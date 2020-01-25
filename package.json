@@ -7,7 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "gcode-preview": "alpha",
+    "gcode-preview": "^2.1.0-alpha.3",
     "vue": "^2.6.11"
   },
   "devDependencies": {

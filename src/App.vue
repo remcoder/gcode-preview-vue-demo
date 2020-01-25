@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <h1>GCode Preview Vue Demo</h1>
+    <!-- lineWidth values less than 0.01 work best for now -->
     <GCodePreview ref="preview" 
       :upperLayerLimit="Infinity"
       :topLayerColor="'lime'"
       :lastSegmentColor="'red'"
+      :lineWidth="0.004" 
     />
     <div># layers loaded: {{ layersLoaded }}</div>
   </div>
@@ -45,7 +47,7 @@ export default {
       this.layersLoaded = preview.layerCount;
       c++;
       if (c*chunkSize < lines.length) { 
-        window.__animationTimer__ = setTimeout(loadProgressive, 500);
+        window.__animationTimer__ = setTimeout(loadProgressive, 200);
       }
     }
     // cancel loading process if one is still in progress

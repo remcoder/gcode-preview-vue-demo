@@ -15,7 +15,8 @@ export default {
   props: {
     topLayerColor: String,
     lastSegmentColor: String,
-    upperLayerLimit: Number
+    upperLayerLimit: Number,
+    lineWidth: Number
   },
 
   data() {
@@ -30,7 +31,8 @@ export default {
       targetId: 'gcode-preview',
       limit: this.upperLayerLimit,
       topLayerColor: new THREE.Color(this.topLayerColor).getHex(),
-      lastSegmentColor: new THREE.Color(this.lastSegmentColor).getHex()
+      lastSegmentColor: new THREE.Color(this.lastSegmentColor).getHex(),
+      lineWidth: this.lineWidth
     });
 
     window.addEventListener('resize', () => {
