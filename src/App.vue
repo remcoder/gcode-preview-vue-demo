@@ -2,19 +2,29 @@
   <div id="app">
     <h1>GCode Preview Vue Demo</h1>
     <!-- lineWidth values less than 0.01 work best for now -->
-    <GCodePreview ref="preview" 
+    <GCodePreview ref="gcodePreview1"
       :upperLayerLimit="Infinity"
       :topLayerColor="'lime'"
       :lastSegmentColor="'red'"
       :lineWidth="0.004" 
     />
-    <div># layers loaded: {{ layersLoaded }}</div>
+
+    <GCodePreview ref="gcodePreview2"
+      :upperLayerLimit="Infinity"
+      :topLayerColor="'lime'"
+      :lastSegmentColor="'red'"
+    />
+    
+
+
+    <!-- <div># layers loaded: {{ layersLoaded }}</div> -->
   </div>
 </template>
 
 <script>
 import GCodePreview from './components/GCodePreview.vue';
-let layersLoaded = 0;
+// let layersLoaded = 0;
+const chunkSize = 500;
 export default {
   components: {
     GCodePreview
@@ -27,33 +37,46 @@ export default {
   },
 
   async mounted() {
-    const response = await fetch('/benchy.gcode');
+    
+    const lines1 = await this.fetchGcode('/benchy.gcode');
+    this.loadPreviewChunked(this.$refs.gcodePreview1, lines1, 300);
 
-    if (response.status !== 200) {
-      throw new Error(`status code: ${response.status}`);
-    }
+    const lines2 = await this.fetchGcode('/puzzle_all.gcode');
+    this.loadPreviewChunked(this.$refs.gcodePreview2, lines2, 300);
+  },
 
-    this.file = await response.text();
-    const lines = this.file.split('\n');
-    const chunkSize = 500;
-    const preview = this.$refs.preview;
+  methods : {
 
-    let c = 0;
-    const loadProgressive = () => {
-      const start = c*chunkSize;
-      const end = (c+1)*chunkSize;
-      const chunk = lines.slice(start, end);
-      preview.processGCode(chunk)
-      this.layersLoaded = preview.layerCount;
-      c++;
-      if (c*chunkSize < lines.length) { 
-        window.__animationTimer__ = setTimeout(loadProgressive, 200);
+    async fetchGcode(url) {
+      const response = await fetch(url);
+
+      if (response.status !== 200) {
+        throw new Error(`status code: ${response.status}`);
       }
+
+      const file = await response.text();
+      return file.split('\n');
+    },
+    
+    loadPreviewChunked(target, lines, delay) {
+      let c = 0;
+      const id = '__animationTimer__' + Math.random().toString(36).substr(2, 9);
+      const loadProgressive = (preview) => {
+        const start = c*chunkSize;
+        const end = (c+1)*chunkSize;
+        const chunk = lines.slice(start, end);
+        target.processGCode(chunk)
+        // this.layersLoaded = target.layerCount;
+        c++;
+        if (c*chunkSize < lines.length) { 
+          window[id] = setTimeout(loadProgressive, delay);
+        }
+      }
+      // cancel loading process if one is still in progress
+      // mostly when hot reloading
+      window.clearTimeout(window[id]);
+      loadProgressive(target);
     }
-    // cancel loading process if one is still in progress
-    // mostly when hot reloading
-    window.clearTimeout(window.__animationTimer__);
-    loadProgressive();
   }
 }
 </script>

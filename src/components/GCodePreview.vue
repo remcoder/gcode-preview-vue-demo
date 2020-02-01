@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <div id="gcode-preview"></div>
-  </div>
+  <canvas ref="preview" class="gcode-preview"></canvas>
 </template>
 
 <script>
@@ -10,7 +8,6 @@
 import { WebGLPreview } from 'gcode-preview';
 import * as THREE from 'three';
 
-let preview;
 export default {
   props: {
     topLayerColor: String,
@@ -26,9 +23,10 @@ export default {
   },
 
   mounted() {
-
-    preview = new WebGLPreview({
-      targetId: 'gcode-preview',
+    console.log(this.$refs.preview);
+    
+    this.preview = new WebGLPreview({
+      canvas: this.$refs.preview,
       limit: this.upperLayerLimit,
       topLayerColor: new THREE.Color(this.topLayerColor).getHex(),
       lastSegmentColor: new THREE.Color(this.lastSegmentColor).getHex(),
@@ -36,16 +34,15 @@ export default {
     });
 
     window.addEventListener('resize', () => {
-      preview.resize();
+      this.preview.resize();
     });
-
-    preview.resize();
   },
 
   methods: {
     processGCode(gcode) {
-      preview.processGCode(gcode);
-      this.layerCount = preview.layers.length;
+
+      this.preview.processGCode(gcode);
+      this.layerCount = this.preview.layers.length;
     }
   }
 }
