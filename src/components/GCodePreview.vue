@@ -1,5 +1,7 @@
 <template>
-  <canvas ref="preview" class="gcode-preview"></canvas>
+  <div>
+    <canvas ref="preview"></canvas>
+  </div>
 </template>
 
 <script>
@@ -23,8 +25,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$refs.preview);
-    
     this.preview = new WebGLPreview({
       canvas: this.$refs.preview,
       limit: this.upperLayerLimit,
@@ -40,15 +40,16 @@ export default {
 
   methods: {
     processGCode(gcode) {
-
       this.preview.processGCode(gcode);
       this.layerCount = this.preview.layers.length;
     }
   }
 }
 </script>
-<style>
-  #gcode-preview {
-    height: 400px;
+<style scoped>
+  canvas {
+    outline: none;
+    width: 100%;
+    height: 100%;
   }
 </style>
